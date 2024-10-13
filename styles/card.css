@@ -1,0 +1,66 @@
+#card {
+    display: flex;
+    flex-direction: column;
+    width: 40rem;
+    max-height: 41.2rem;
+    padding: 15px 25px;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+    -webkit-box-shadow: 2px 6.5px 10px 3px #ddd;
+    -moz-box-shadow: 2px 6.5px 10px 3px #ddd;
+    box-shadow: 2px 6.5px 10px 3px #ddd;
+
+    .divisor {
+        padding: 8px;
+    }
+
+    #first-divisor {
+        border-bottom: 1px solid grey;
+        height: 6rem;
+
+        span {
+            font-size: 15px;
+            font-weight: bold;
+        }
+    }
+
+    #secondary-divisor {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .box-inf {
+            background-color: #ececec;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px;
+            border-radius: 5px;
+
+            span {
+                color: #080808;
+            }
+
+            p {
+                color: #2e2e2e;
+                font-size: 13px;
+            }
+        }
+
+        #view-data-complete {
+            padding: 10px 0;
+            color: #fff;
+            background-color: #00a4f0;
+            border-radius: 5px;
+        }
+
+        #view-data-complete:hover {
+            opacity: 0.8;
+        }
+
+        #view-data-complete:active {
+            opacity: 0.6;
+        }
+    }
+}
