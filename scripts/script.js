@@ -318,8 +318,6 @@ function openModalCnpj(data) {
     const btnClose = document.querySelector('.btn-close-modal')
 
     window.addEventListener('click', (ev) => {
-        console.log(ev.target)
-
         if(ev.target.classList.contains('container-modal')) {
             containerModal.remove()
         }
