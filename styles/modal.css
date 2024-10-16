@@ -40,11 +40,16 @@
     display: grid;
     margin-top: 1.5rem;
     grid-template-columns: 1fr 1fr;
+    column-gap: 25px;
 }
 .data-view { 
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+#data-empresa {
+    border-right: 1px solid #dddddd;
 }
 
 .data-view div p {
