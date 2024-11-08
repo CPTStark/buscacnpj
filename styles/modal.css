@@ -60,3 +60,17 @@
 .data-view div p {
     font-size: 1.4rem;
 }
+
+.box-mun {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#search-ibge {
+    padding: 5px;
+    background-color: #00a4f0;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 600;
+}

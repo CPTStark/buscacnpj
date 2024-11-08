@@ -295,7 +295,10 @@ function openModalCnpj(data) {
                     </div>
                     <div>
                         <span>Munícipio</span>
-                        <p>${data.municipio}</p>
+                        <div class="box-mun">
+                            <p>${data.municipio}</p>
+                            <button id="search-ibge">Código IBGE</button>
+                        </div>
                     </div>
                     <div>
                         <span>Bairro:</span>
@@ -325,5 +328,67 @@ function openModalCnpj(data) {
 
     btnClose.addEventListener('click', () => {
         containerModal.remove()
+    })
+
+    window.addEventListener('keydown', (ev) => {
+        if(ev.key === 'Escape') {
+            containerModal.remove()
+        }
+    }) 
+
+    const btnSearchCnpj = document.getElementById('search-ibge');
+    btnSearchCnpj.addEventListener('click', () => {
+        searchIbge(data.uf)
+    })
+}
+
+async function searchIbge(uf) {
+    try {
+        const response = await fetch(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}?providers=dados-abertos-br,gov,wikipedia`);
+        const data = await response.json();
+        const dataIbge = data
+
+        openBoxIbge(dataIbge)
+
+    } catch (err) {
+        toast(`Ops, algo não deu certo: ${err}`, 3000, 'top', 'center', 'yellow', 'black');
+    }
+}
+
+function openBoxIbge(data) {
+    const container = document.getElementById('container');
+
+    const containerModal = document.createElement('div');
+    containerModal.classList.add('container-modal');
+
+   console.log(data)
+
+    containerModal.innerHTML = `
+        <div class="modal-view">
+            <div class="header-modal">
+                <h1>Código IBGE</h1>
+                <button id="close-ibge" class="btn-close-modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+            <div>
+                <div class="main-modal">
+                    <div>
+                        <p>Cidade</p>
+                        <span>${data.nome}</span>
+                        <p>Código IBGE</p>
+                        <span>${data.codigo_ibge}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+
+    container.appendChild(containerModal)
+
+    const btnCloseIbge = document.getElementById('close-ibge');
+
+    btnCloseIbge.addEventListener('click', () => {
+        containerModal.remove();
     })
 }
