@@ -83,12 +83,12 @@ function toast(text, duration, gravity, position, background, color) {
 }
 
 function verifyIsLoading() {
-    const loader = document.getElementById('loader');
+    const containerLoader = document.getElementById('container-loading');
 
     if (isLoading) {
-        loader.classList.remove('disabled');
+        containerLoader.classList.remove('disabled');
     } else {
-        loader.classList.add('disabled');
+        containerLoader.classList.add('disabled');
     }
 }
 
@@ -343,15 +343,21 @@ function openModalCnpj(data) {
 }
 
 async function searchIbge(uf) {
+    isLoading = true;
+    verifyIsLoading();
+
     try {
         const response = await fetch(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}?providers=dados-abertos-br,gov,wikipedia`);
         const data = await response.json();
         const dataIbge = data
 
         openBoxIbge(dataIbge)
-
+        isLoading = false
+        verifyIsLoading()
     } catch (err) {
         toast(`Ops, algo não deu certo: ${err}`, 3000, 'top', 'center', 'yellow', 'black');
+        isLoading = false
+        verifyIsLoading()
     }
 }
 
@@ -361,34 +367,40 @@ function openBoxIbge(data) {
     const containerModal = document.createElement('div');
     containerModal.classList.add('container-modal');
 
-   console.log(data)
+    let mainModalContent = '';
+    data.forEach(item => {
+        mainModalContent += `
+            <div class="modal-item">
+                <div class="flex items-center gap-5">
+                    <p class="title-data">Cidade:</p>
+                    <span class="name-city data-ibge">${item.nome}</span>
+                </div>
+                <div class="flex items-center gap-5">
+                    <p class="title-data">Código IBGE:</p>
+                    <span class="data-ibge">${item.codigo_ibge}</span>
+                </div>
+            </div>
+        `;
+    });
 
     containerModal.innerHTML = `
         <div class="modal-view">
             <div class="header-modal">
-                <h1>Código IBGE</h1>
+                <h2>Código IBGE - Município</h2>
                 <button id="close-ibge" class="btn-close-modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
             </div>
-            <div>
-                <div class="main-modal">
-                    <div>
-                        <p>Cidade</p>
-                        <span>${data.nome}</span>
-                        <p>Código IBGE</p>
-                        <span>${data.codigo_ibge}</span>
-                    </div>
-                </div>
+            <div class="main-modal">
+                ${mainModalContent}
             </div>
         </div>
-    `
+    `;
 
-    container.appendChild(containerModal)
+    container.appendChild(containerModal);
 
     const btnCloseIbge = document.getElementById('close-ibge');
-
     btnCloseIbge.addEventListener('click', () => {
         containerModal.remove();
-    })
+    });
 }

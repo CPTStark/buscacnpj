@@ -10,14 +10,21 @@
     inset: 0;
 }
 
+#container-loading {
+    z-index: 999;
+}
+
 .modal-view {
     background-color: #fff;
     border-radius: 8px;
     width: 80rem;
+    max-height: 80%;
     padding: 2rem;
     -webkit-box-shadow: 3px 3px 10px 3px #a1a1a1;
     -moz-box-shadow: 3px 3px 10px 3px #a1a1a1;
     box-shadow: 3px 3px 10px 3px #a1a1a1;
+    overflow: hidden;
+    position: relative;
 }
 
 .header-modal {
@@ -38,9 +45,10 @@
 
 .main-modal {
     display: grid;
-    margin-top: 1.5rem;
     grid-template-columns: 1fr 1fr;
     column-gap: 25px;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .header-modal, .main-modal {
@@ -73,4 +81,26 @@
     border-radius: 5px;
     color: #fff;
     font-weight: 600;
+}
+
+.modal-item {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    gap: 7px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+.title-data {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.data-ibge {
+    font-size: 14px;
+}
+
+.name-city {
+    text-transform: capitalize;
 }
